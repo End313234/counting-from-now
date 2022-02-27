@@ -3,6 +3,7 @@
         "disgord",
         "godotenv",
         "andersfylling",
-        "joho"
+        "joho",
+        "gorm"
     ]
 }

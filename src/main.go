@@ -1,11 +1,14 @@
 package main
 
 import (
+	"counting-from-now/src/database/models"
 	"counting-from-now/src/helpers"
 	"fmt"
 
 	"github.com/andersfylling/disgord"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -13,6 +16,13 @@ func main() {
 	if err != nil {
 		panic("could not load .env file")
 	}
+
+	database, err := gorm.Open(sqlite.Open("database.sqlite"))
+	if err != nil {
+		panic(err)
+	}
+
+	database.AutoMigrate(&models.User{}, &models.Log{})
 
 	bot := helpers.Bot{
 		Client: disgord.New(disgord.Config{
