@@ -1,6 +1,7 @@
 package main
 
 import (
+	"counting-from-now/src/helpers"
 	"fmt"
 
 	"github.com/andersfylling/disgord"
@@ -13,12 +14,15 @@ func main() {
 		panic("could not load .env file")
 	}
 
-	client := disgord.New(disgord.Config{
-		BotToken: env["BOT_TOKEN"],
-	})
-	defer client.Gateway().StayConnectedUntilInterrupted()
+	bot := helpers.Bot{
+		Client: disgord.New(disgord.Config{
+			BotToken: env["BOT_TOKEN"],
+		}),
+		SlashCommands: []helpers.SlashCommand{},
+	}
+	defer bot.Client.Gateway().StayConnectedUntilInterrupted()
 
-	client.Gateway().BotReady(func() {
+	bot.Client.Gateway().BotReady(func() {
 		fmt.Println("Bot is ready to Go!")
 	})
 }
