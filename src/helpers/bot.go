@@ -1,6 +1,9 @@
 package helpers
 
-import "github.com/andersfylling/disgord"
+import (
+	"github.com/andersfylling/disgord"
+	"gorm.io/gorm"
+)
 
 type SlashCommand struct {
 	disgord.ApplicationCommand
@@ -9,4 +12,5 @@ type SlashCommand struct {
 type Bot struct {
 	Client        *disgord.Client
 	SlashCommands []SlashCommand
+	Database      *gorm.DB
 }

@@ -1,7 +1,9 @@
 package main
 
 import (
+	"counting-from-now/src/config"
 	"counting-from-now/src/database/models"
+	"counting-from-now/src/extensions/events"
 	"counting-from-now/src/helpers"
 	"fmt"
 
@@ -24,15 +26,19 @@ func main() {
 
 	database.AutoMigrate(&models.User{}, &models.Log{})
 
+	config.Database = database
 	bot := helpers.Bot{
 		Client: disgord.New(disgord.Config{
 			BotToken: env["BOT_TOKEN"],
+			Intents:  disgord.AllIntents(),
 		}),
-		SlashCommands: []helpers.SlashCommand{},
+		SlashCommands: make([]helpers.SlashCommand, 0),
 	}
 	defer bot.Client.Gateway().StayConnectedUntilInterrupted()
 
 	bot.Client.Gateway().BotReady(func() {
 		fmt.Println("Bot is ready to Go!")
 	})
+
+	bot.Client.Gateway().VoiceStateUpdate(events.VoiceStateUpdate)
 }

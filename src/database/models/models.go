@@ -5,13 +5,13 @@ import (
 )
 
 type Log struct {
-	UserId   uint `gorm:"primaryKey"`
+	UserId   uint
 	GuildId  uint
 	JoinedAt time.Time
 }
 
 type User struct {
-	UserId     uint `gorm:"primaryKey"`
+	Id         uint `gorm:"primaryKey"`
 	GuildId    uint
-	TimeInCall time.Time
+	TimeInCall int
 }
