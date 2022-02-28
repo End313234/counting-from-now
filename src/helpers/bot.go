@@ -6,7 +6,13 @@ import (
 )
 
 type SlashCommand struct {
-	disgord.ApplicationCommand
+	ID                disgord.Snowflake
+	Type              disgord.ApplicationCommandType
+	ApplicationID     disgord.Snowflake
+	GuildID           disgord.Snowflake
+	Description       string
+	Options           []*disgord.ApplicationCommandOption
+	DefaultPermission bool
 }
 
 type Bot struct {
